@@ -1,4 +1,4 @@
-# **Simple Guide to Run Multiple Nodes on Gaianet (Works and tested only for DHARMA domain**
+# **Simple Guide to Run Multiple Nodes on Gaianet (Works and tested only for DHARMA domain)**
 
 ## **1. Install Required Packages and CUDA 12.8**
 
