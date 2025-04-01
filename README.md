@@ -1,4 +1,10 @@
-# **Simple Guide to Run Multiple Nodes on Gaianet (Works and tested only for DHARMA domain)**
+# **Simple Guide to Run Multiple Nodes on Gaianet (Works and tested only for DHARMA domain)
+
+Note: 
+-Need minimum 10Gb ram/vram
+-Recommended atleast 3080 Gpu+ series
+-POWER of GPU's should be above 350W+
+**
 
 ## **1. Install Required Packages and CUDA 12.8**
 
