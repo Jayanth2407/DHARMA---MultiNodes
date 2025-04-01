@@ -87,7 +87,15 @@ CUDA_VISIBLE_DEVICES=0 gaianet start --base $HOME/gaia-node-101
 CUDA_VISIBLE_DEVICES=1 gaianet start --base $HOME/gaia-node-102
 ```
 
-## **5. GPU Activity Monitoring Script**
+## **5. Get Node's id & Device id**
+
+### **Option 1: Running Two Nodes on the Same GPU**
+```bash
+gaianet info --base $HOME/gaia-node-101
+gaianet info --base $HOME/gaia-node-102
+```
+
+## **6. GPU Activity Monitoring Script**
 
 Modify the Start Nodes command according to your requirements in the script below:
 
@@ -141,7 +149,7 @@ Save the file and make it executable:
 chmod +x monitor_gpu_activity.sh
 ```
 
-## **6. Using Screen to Run the Monitoring Script in the Background**
+## **7. Using Screen to Run the Monitoring Script in the Background**
 
 ### **Install Screen**
 ```bash
