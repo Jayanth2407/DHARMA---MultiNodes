@@ -94,7 +94,6 @@ CUDA_VISIBLE_DEVICES=1 gaianet start --base $HOME/gaia-node-102
 
 ## **5. Get Node's id & Device id**
 
-### **Option 1: Running Two Nodes on the Same GPU**
 ```bash
 gaianet info --base $HOME/gaia-node-101
 gaianet info --base $HOME/gaia-node-102
