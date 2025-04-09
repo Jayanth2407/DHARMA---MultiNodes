@@ -1,5 +1,8 @@
 # Simple Guide to Run Gaia Nodes on Gaianet (Works and tested only for HASHTAG domain)
 
+# Domain Name: hashtag.gaia.domains 
+# LLM Model: Qwen2.5-0.5B-Instruct-Q5_K_M
+
 Note: 
 -Need minimum 10Gb ram/vram
 -Recommended atleast 3080 Gpu+ series
