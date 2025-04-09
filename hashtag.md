@@ -63,11 +63,12 @@ gaianet info --base $HOME/gaianet
 ## **5. Chatbot script**
 
 Add your api's according to your requirements in the script below:
-Note Some keypoints before proceeding: 
+--Note this keypoints before proceeding: 
 - Each node can handle max 10 request each cycle (Max.10 request).
 - To add api-key in Chatbot, Just replace "gaia-api1" with your api-key (just add your api key inside " "), Then remove extra one's if you have only 1 api-key.
 - If u have 1 api, then add only 1 api in chatbot script below and keep THREAD_COUNT=10 (Here in this case it send 10 Request from 1 api for each cycle)
 - If u have 5 api, then THREAD_COUNT=2 ( 5*2=10 Here in this case it send 10 Request from 5 api for each cycle)
+
 
 ```bash
 nano chatbot.sh
