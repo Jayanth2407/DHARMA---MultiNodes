@@ -1,21 +1,27 @@
-# Simple Guide to Run Gaia Nodes on Gaianet (Works and tested only for HASHTAG domain)
+Here’s a cleaner, more polished version of your README with enhanced formatting, clarity, and grammar while keeping your technical flow intact:
 
-# Domain Name: hashtag.gaia.domains 
-# LLM Model: Qwen2.5-0.5B-Instruct-Q5_K_M
+---
 
-Note: 
--Need minimum 10Gb ram/vram
--Recommended atleast 3080 Gpu+ series
--POWER of GPU's should be above 200W+
+# 🚀 Simple Guide to Run Gaia Nodes on Gaianet  
+**Tested and verified for `hashtag.gaia.domains` domain only**
 
-## **1. Install Required Packages and CUDA 12.8**
+---
+
+### 🌐 Domain: `hashtag.gaia.domains`  
+### 🤖 Model: `Qwen2.5-0.5B-Instruct-Q5_K_M`
+
+> **Minimum Requirements**  
+- 🧠 RAM/VRAM: **10 GB**  
+- ⚡ Recommended GPU: **NVIDIA 3080 or above**  
+- 🔌 GPU Power: **200W+**
+
+---
+
+## 🔧 1. Install Required Packages and CUDA 12.8
 
 ```bash
 apt update && apt upgrade -y
-apt-get update && apt-get upgrade -y
-
-apt install pciutils lsof curl nvtop btop -y
-apt-get install jq -y
+apt install pciutils lsof curl nvtop btop jq -y
 
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
 dpkg -i cuda-keyring_1.1-1_all.deb
@@ -23,58 +29,68 @@ apt-get update
 apt-get -y install cuda-toolkit-12-8
 ```
 
-## **2. Install and Configure the Node**
+---
+
+## ⚙️ 2. Install and Configure the Node
 
 ```bash
 home_dir="gaianet"
-downloads='gaianet'
 gaia_port="8000"
 gaia_config="Qwen2.5-0.5B-Instruct-Q5_K_M"
 
+# Kill any process on the same port and cleanup old setup
 lsof -t -i:$gaia_port | xargs kill -9
 rm -rf $HOME/$home_dir
 curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/uninstall.sh' | bash
 
+# Create working directory and install node
 mkdir $HOME/$home_dir
-
 curl -sSfL 'https://github.com/GaiaNet-AI/gaianet-node/releases/latest/download/install.sh' | bash -s -- --ggmlcuda 12 --base $HOME/$home_dir
-
 source /root/.bashrc
 
+# Download and set config
 wget -O "$HOME/$home_dir/config.json" https://raw.githubusercontent.com/Jayanth2407/gaiaNode/main/config2.json
 CONFIG_FILE="$HOME/$home_dir/config.json"
-jq '.chat = "https://huggingface.co/gaianet/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/Qwen2.5-0.5B-Instruct-Q5_K_M.gguf"' "$CONFIG_FILE" > tmp.$$.json && mv tmp.$$.json "$CONFIG_FILE"
-jq '.chat_name = "Qwen2.5-0.5B-Instruct-Q5_K_M"' "$CONFIG_FILE" > tmp.$$.json && mv tmp.$$.json "$CONFIG_FILE"
-grep '"chat":' $HOME/$home_dir/config.json
-grep '"chat_name":' $HOME/$home_dir/config.json
+
+jq '.chat = "https://huggingface.co/gaianet/Qwen2.5-0.5B-Instruct-GGUF/resolve/main/Qwen2.5-0.5B-Instruct-Q5_K_M.gguf"' "$CONFIG_FILE" > tmp.json && mv tmp.json "$CONFIG_FILE"
+jq '.chat_name = "Qwen2.5-0.5B-Instruct-Q5_K_M"' "$CONFIG_FILE" > tmp.json && mv tmp.json "$CONFIG_FILE"
+
+# Verify config
+grep '"chat":' $CONFIG_FILE
+grep '"chat_name":' $CONFIG_FILE
+
+# Final initialization
 gaianet config --base $HOME/$home_dir --port $gaia_port
 gaianet init --base $HOME/$home_dir
 ```
 
-## **3. Start the Nodes**
+---
+
+## ▶️ 3. Start the Node
 
 ```bash
 gaianet start --base $HOME/gaianet
 ```
 
-## **4. Get Node's id & Device id**
+---
+
+## 🆔 4. Get Node and Device Info
 
 ```bash
 gaianet info --base $HOME/gaianet
 ```
 
-## **5. Chatbot script**
+---
 
-Note this keypoints before proceeding
-- Each node can handle max 10 request each cycle (Max.10 request).
-- To add api-key in Chatbot, Just replace "gaia-api1" with your api-key (just add your api key inside " "), Then remove extra one's if you have only 1 api-key.
-- If u have 1 api, then add only 1 api in chatbot script below and keep THREAD_COUNT=10 (Here in this case it send 10 Request from 1 api for each cycle)
-- If u have 5 api, then THREAD_COUNT=2 ( 5*2=10 Here in this case it send 10 Request from 5 api for each cycle)
+## 🤖 5. Chatbot Script Setup
 
-To Create/Edit ChatBot Script`chatbot.sh`:
-```bash
-nano chatbot.sh
-```
+> **Key Points:**  
+- Each node can handle **max 10 requests per cycle**.  
+- Replace `"gaia-api1"` with your **actual API key(s)**.  
+- If using 1 API key → `THREAD_COUNT=10`  
+- If using 5 API keys → `THREAD_COUNT=2` (5×2=10 total requests per cycle)
+
+### Create/Edit the `chatbot.sh` Script
 
 Paste the following script inside `chatbot.sh`:
 
@@ -223,33 +239,44 @@ while true; do
 done
 ```
 
-Save the file and make it executable:
+### Make it Executable
 
 ```bash
 chmod +x chatbot.sh
 ```
 
-## **6. Using Screen to Run the Chatbot Script in the Background**
+---
 
-### **Install Screen**
+## 📟 6. Run Chatbot Script in Background (using `screen`)
+
+### Install `screen` (if not installed)
+
 ```bash
 apt install screen
 ```
 
-### **Create a New Screen Session**
+### Create a New Screen Session
+
 ```bash
-screen -S chatbot 
+screen -S chatbot
 ```
 
-### **Start the Monitoring Script**
+### Run the Script
+
 ```bash
 ./chatbot.sh
 ```
 
-### **Detach from Screen Session**
-Press `Ctrl + A`, then `D`.
+### Detach from Session
 
-### **Reconnect to the Screen Session**
+Press `Ctrl + A`, then `D`
+
+### Reconnect Anytime
+
 ```bash
 screen -r chatbot
 ```
+
+---
+
+### ✅ You’re all set to run Gaia nodes and interact with the model!
