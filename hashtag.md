@@ -16,13 +16,7 @@
 ## 🔧 1. Install Required Packages and CUDA 12.8
 
 ```bash
-apt update && apt upgrade -y
-apt install pciutils lsof curl nvtop btop jq -y
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-dpkg -i cuda-keyring_1.1-1_all.deb
-apt-get update
-apt-get -y install cuda-toolkit-12-8
+rm -rf ~/packageskit.sh; curl -O https://raw.githubusercontent.com/Jayanth2407/HASHTAG_Gaia_Domain/main/packageskit.sh; chmod +x packageskit.sh; ./packageskit.sh
 ```
 
 ---
